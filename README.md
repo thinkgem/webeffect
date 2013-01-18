@@ -21,5 +21,5 @@ Java JDK1.6、Spring Framework 3.0、Status2.1、Hibernate 3、Freemarker 2.3
 
 ##更多文档
 
-* [网页特效集锦系统 - 需求说明书.doc]()
-* [网页特效集锦系统 - 数据库设计.doc]()
+* [网页特效集锦系统 - 需求说明书.doc](https://github.com/thinkgem/webeffect/raw/master/%E7%BD%91%E9%A1%B5%E7%89%B9%E6%95%88%E9%9B%86%E9%94%A6%E7%B3%BB%E7%BB%9F%20-%20%E9%9C%80%E6%B1%82%E8%AF%B4%E6%98%8E%E4%B9%A6.doc)
+* [网页特效集锦系统 - 数据库设计.doc](https://github.com/thinkgem/webeffect/raw/master/%E7%BD%91%E9%A1%B5%E7%89%B9%E6%95%88%E9%9B%86%E9%94%A6%E7%B3%BB%E7%BB%9F%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1.doc)
