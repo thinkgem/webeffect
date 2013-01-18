@@ -12,8 +12,8 @@ Java JDK1.6、Spring Framework 3.0、Status2.1、Hibernate 3、Freemarker 2.3
 ##快速安装部署
 
 1. 安装Tomcat6 Web容器及MySql5数据库并启动服务。
-2. 将doc\webeffect.war软件包拷贝到站点跟目录下
-3. 将doc\webeffect.sql文件导入到MySql数据库
+2. 将项导入到Eclipse中，编译并部署到Tomcat发布目录下
+3. 将sql\webeffect.sql文件导入到MySql数据库
 4. 将MySql的用户名设置为root，密码设置为空，也可直接修改软件的连接数据库配置/WEB-INF/classes/jdbc.properties
 5. 打开浏览器，输入地址：http://localhost:8080/webeffect
 6. 管理员用户名：admin 密码：admin
