@@ -1,0 +1,64 @@
+<link href="${resPath}/swfupload/swfupload.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${resPath}/jquery.form.js"></script>
+<script type="text/javascript" src="${resPath}/jquery.validate.js"></script>
+<script type="text/javascript" src="${resPath}/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="${resPath}/swfupload/swfupload.swfobject.js"></script>
+<script type="text/javascript" src="${resPath}/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="${resPath}/swfupload/handlers_edit.js"></script>
+<div class="box">
+   <div class="t1">编辑特效</div>
+   <div class="p10 pt0">         
+     <@s.form id="editForm" action="/effect/edit.jspx" method="post">           
+     <table class="tb">
+   	  <tbody>
+   	  	<tr>
+	      <td nowrap="nowrap"><label class="lbl">所属分类</label></td>
+	      <td><@s.select name="effect.weCategory.id" list="categoryList" listKey="id" listValue="name" cssClass="txt w200"/>
+	        &nbsp;<span class="req">*</span>&nbsp;<span class="desc"></span>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td nowrap="nowrap"><label class="lbl">特效标题</label></td>
+	      <td><@s.textfield name="effect.title" cssClass="txt w200"/>
+	        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">特效标题在1-200个字符之间</span>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td nowrap="nowrap"><label class="lbl">特效作者</label></td>
+	      <td><@s.textfield name="effect.author" cssClass="txt w200"/>
+	        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">特效作者在1-200个字符之间</span>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td nowrap="nowrap"><label class="lbl">特效文件</label></td>
+	      <td>
+	      	<input type="text" id="fileName" disabled="true" class="txt w200" value=""/>
+	      	<span id="spanButtonPlaceholder"></span>
+	      	<input type="button" value="浏览" class="btn" style="width: 61px; height: 23px;" />					      
+	      	&nbsp;<span class="desc">若不修改请留空，小于5M的zip格式文件，zip包中必须包含html文件</span>
+	      	<div class="flash" id="fsUploadProgress"></div>
+			<input type="hidden" name="effect.weFile.id" id="fileId" value="" />
+			${effect.weFile.title}&nbsp;&nbsp;<span class="desc">新上传的文件文件，会被替换此特效文件</span>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td nowrap="nowrap"><label class="lbl">使用说明</label></td>
+	      <td><@s.textarea name="effect.description" cssClass="txt" cols="70" rows="10"/>
+	        &nbsp;<span class="req">*</span>&nbsp;<span class="desc"></span>
+	      </td>
+	    </tr>
+   	  </tbody>
+   	  <tfoot>
+	    <tr class="nobg">
+	      <td colspan="2">
+	        <input type="submit" class="btn" value="提交" id="btnSubmit" />						        
+	        <input type="button" class="btn" value="返回" onclick="window.location.reload();" />
+	      </td>
+	    </tr>
+	 </tfoot>
+     </table>
+     <@s.hidden name="effect.id"/>
+     </@s.form>
+   </div>
+</div>   
+<div class="mt10" id="message"></div>

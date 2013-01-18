@@ -1,0 +1,15 @@
+		<div class="box">
+           <div class="t1"><#if actionErrors.size() gt 0>错误信息<#else>提示信息</#if></div>
+           <div class="p10 pt0">
+				<div style="font-size:18px;">
+				   	<#if actionErrors.size() gt 0>
+				   		<@s.actionerror escape="false" />
+				   	<#elseif actionMessages.size() gt 0>
+				   		<@s.actionmessage escape="false"/>
+				   	<#else>
+				   		<ul><li>无消息</li></ul>
+					</#if>
+				</div>
+           </div>
+       </div>   
+		

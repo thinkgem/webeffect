@@ -1,0 +1,24 @@
+#MyEclipse Hibernate Properties
+#Fri Sep 10 15:02:00 CST 2010
+sessionFactoryName=com.thinkgem.webeffect.model.HibernateSessionFactory
+genBasicCompId=false
+profile=
+daoSFId=
+version=3.2
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=identity
+libInstallFolder=web/WEB-INF/lib
+addLibs2Project=false
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/webeffect/src/config/hibernate.cfg.xml
+createConfigFile=true
+addLibs2Classpath=false

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="center" namespace="/center" extends="common">
+		<action name="*" method="{1}" class="userAction">
+			<interceptor-ref name="authStack"/>
+			<result>${tplPath}/center/{1}.html</result>		
+		</action>
+	</package>
+</struts>

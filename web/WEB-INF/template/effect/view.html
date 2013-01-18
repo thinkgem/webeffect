@@ -1,0 +1,94 @@
+<script type="text/javascript" src="${resPath}/jquery.form.js"></script>
+<script type="text/javascript">//<!--
+	$(function(){
+		$('#commentForm').bind('submit', function() {
+            if(confirm('确认评论该特效吗？')){                    
+                $(this).ajaxSubmit(function(data){
+                    if(data=="success"){
+                        alert('评论发表成功！');
+                        page(1);
+                		$("#commentContent").val('');
+                    }else if(data=="input"){
+                    	alert('评论内容不能为空');
+                    }else{
+                        alert(data);
+                    }
+                });
+            }
+            return false;
+        });
+        page(1);
+        $.get('${base}/effect/getNickname.jspx',{username:$('#username').html()},function(data){
+        	if (data != '' && data.length <= 20) $('#username').html(data);
+        });
+	});
+	function page(i){
+		$.get("${base}/effect/comment.jspx?_="+new Date().getTime(),{id:${effect.id},pageIndex:i,pageSize:5},function(data){
+			$("#commentList").html(data);
+		});
+	}
+	function delComment(id){
+		if(confirm('确认删除改评论？')){
+            $.post('${base}/effect/deleteComment.jspx',{id:id},function(data){
+                if (data!='success'){
+                    alert(data);
+                }else{
+                	alert('操作成功！');
+                	page(1);
+                }
+            });
+        }
+	}
+//-->
+</script>
+<div class="box">
+    <div class="t1">特效预览</div>
+      <div class="p10 pt0">                    
+         <table class="tb">	                       
+             <thead><tr><td align="center" style="font-size:24px;line-height:56px;">${effect.title}</td></tr></thead>
+             <tbody class="no_hover">
+       	   	  <tr><td align="center">分类：<a href="${base}/effect/index.jspx?categoryId=${effect.weCategory.id}">${effect.categoryName}</a>&nbsp;&nbsp;
+       	   	  		作者：${effect.author}&nbsp;&nbsp;&nbsp;上传者：<span id="username">${effect.username}</span>&nbsp;&nbsp;
+       	   	  		查看：${effect.clickNum}次&nbsp;&nbsp;下载：${effect.downNum}次&nbsp;&nbsp;
+       	   	  </td></tr>
+       	   	  <tr><td>
+       	   	  <iframe id="previewFrame" name="preview" frameborder="0" style="width:736px;_width:732px;height:300px;" class="txt"
+       	   	    onload="$(this).height($(this).contents().find('body').height()+20)"
+				src="${base}/preview/${effect.weFile.path}/${effect.weFile.name}/${effect.weFile.previewName}"></iframe>
+       	   	  </td></tr>
+       	  	  <tr><td><strong>使用说明：</strong>
+       	  	  	<@s.textarea name="effect.description" rows="15" cols="88" cssClass="txt" cssStyle="width:736px;_width:732px;"/>
+       	  	  </td></tr>
+             </tbody>
+             <tfoot>
+              <tr><td>上传时间：${effect.created}&nbsp;&nbsp;更新时间：${effect.updated}</td></tr>
+              <tr><td colspan="1">
+              <input type="button" value="新窗口预览" class="btn" onclick="window.open($('#previewFrame').attr('src'))"/>&nbsp;
+			 <input type="button" value="下载" class="btn" onclick="location='${base}/effect/download.jspx?id=${effect.weFile.id}'"/>&nbsp;	                          
+			 <#if Session?exists && Session.user?exists && (Session.user.role==1 || Session.user.username==effect.username)><input type="button" value="编辑" class="btn" onclick="edit(${effect.id});"/>&nbsp;
+			 <input type="button" value="删除" class="btn" onclick="del(${effect.id});"/>&nbsp;</#if>
+			 <input type="button" value="返回" class="btn" onclick="window.location.reload();" />&nbsp;</td></tr>
+           </tfoot>
+       </table>
+    </div>
+</div>
+<div class="box mt10">
+    <div class="t1">网友评论</div>
+    <div class="p10 pt0">
+       <@s.form id="commentForm" action="/effect/addComment.jspx" method="post">
+       <table class="tb">
+       	<tbody class="no_hover" id="commentList">
+        </tbody>
+        <tbody class="no_hover">
+    	  <tr><td><strong>发表评论：</strong>
+    	  	<@s.textarea id="commentContent" name="comment.content" rows="5" cols="88" cssClass="txt" cssStyle="width:736px;_width:732px;"/>
+    	  </td></tr>
+        </tbody>
+        <tfoot>
+           <tr><td><input type="submit" value="发表" class="btn"/>&nbsp;<input type="button" value="返回" class="btn" onclick="window.location.reload();" />&nbsp;</td></tr>
+        </tfoot>
+       </table>
+       <@s.hidden name="comment.weEffect.id" value="${effect.id}"/>
+       </@s.form>
+    </div>
+</div>

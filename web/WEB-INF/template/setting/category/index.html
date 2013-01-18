@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="overflow-y:scroll;">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>分类管理 - <@s.text name='title'/></title>
+        <#include tplPath+"/include/head.html"/>        
+		<script type="text/javascript" src="${resPath}/jquery.form.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			$('#categoryForm').bind('submit', function() {
+                if(confirm('确认提交修改吗？')){
+                    //loading('#loading', '正在更新分类请稍候...');                    
+                    $(this).ajaxSubmit(function(data){
+                        if(data=="success"){
+                            alert('操作成功！');
+                        	window.location.reload();
+                        }else{
+                        	$('#message').html(data);
+                        }
+                    });
+                }
+                return false;
+            });
+		});
+		function add() {
+			var index = $('#tbody').children().length;
+        	$('#tbody').append('<tr><td><@s.hidden name="categoryList['+index+'].id" value=""/><@s.textfield name="categoryList['+index+'].name" value="" cssClass="txt w250"/></td>'
+                	+'<td><@s.textfield name="categoryList['+index+'].description" value="" cssClass="txt w350"/></td>'
+                	+'<td><@s.textfield name="categoryList['+index+'].weight" value="0" cssClass="txt w50" onkeyup="this.value=this.value.replace(/[^0-9]/g,\"\");"/></td>'
+                	+'<td><a href="javascript:" onclick="confirm(\'确认删除该分类？\');$(this).parents(\'tr\').remove();">删除</a></td></tr>');
+        }
+        function del(self, id){
+            if(confirm('确认删除该分类？')){
+                $.post('${base}/setting/category/delete.jspx',{id:id},function(data){
+                    if (data!='success'){
+                        alert(data);
+                    }else{
+                    	alert('操作成功！');
+                    	window.location.reload();
+                    }
+                });
+            }
+		}
+		</script>
+    </head>
+    <body class="bg">   
+    	<#include tplPath+"/include/header.html"/>     
+        <div class="content w980">
+            <div class="w200 left">
+		        <div class="box">
+		            <div class="p10">
+		                <h2 class="t3">分类管理</h2>
+		            </div>
+		        </div>
+		        <div class="box mt10">
+		            <div class="p10">
+		                <ul class="ul" id="leftNav">
+		                    <li><a href="${base}/setting/user/index.jspx">用户管理</a></li>
+		                    <li class="current"><a href="${base}/setting/category/index.jspx">分类管理</a></li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="w770 left ml10" id="ajax">		    
+	            <div class="box">
+	                <div class="t1">分类列表</div>
+	                <div class="p10 pt0">
+	                   <@s.form id="categoryForm" action="/setting/category/update.jspx" method="post">                    
+	                   <table class="tb">
+	                       <thead><tr><td>名称</td><td>描述</td><td>权重</td><td>操作</td></tr></thead>
+	                       <tbody id="tbody">
+	                          <#list categoryList as v>		                	
+		                      <tr><td><@s.hidden name="categoryList[${v_index}].id" value=v.id/><@s.textfield name="categoryList[${v_index}].name" value=v.name cssClass="txt w250"/></td>
+		                      <td><@s.textfield name="categoryList[${v_index}].description" value=v.description cssClass="txt w350"/></td>
+		                      <td><@s.textfield name="categoryList[${v_index}].weight" value=v.weight cssClass="txt w50" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
+		                      <td><a href="javascript:" onclick="del(this, ${v.id})">删除</a></td></tr>
+		                      </#list>
+	                       </tbody>
+	                       <tbody>
+                                <tr><td colspan="4"><@s.submit value="提交更改" cssClass="btn"/>&nbsp;<a href="javascript:" onclick="add();" class="add">添加分类</a></td></tr>
+                           </tbody>
+	                   </table>
+	                   </@s.form>
+	                </div>
+	            </div>		    		    
+		    </div>		    
+        </div>
+        <div class="clear10"></div>
+        <div class="mt10" id="message"></div>
+        <#include tplPath+"/include/footer.html"/>
+    </body>
+</html>

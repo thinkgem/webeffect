@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="overflow-y:scroll;">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title><@s.text name='title'/></title>
+        <#include "../include/head.html"/>
+        <script type="text/javascript" src="${resPath}/jquery.form.js"></script>
+        <script type="text/javascript">
+		$(function(){
+			$('#userForm').bind('submit', function() {
+                if(confirm('确认提交修改吗？')){                    
+                    $(this).ajaxSubmit(function(data){
+                        if(data=="success"){
+                            alert('修改成功！');
+                        	window.location.reload();
+                        }else{
+                        	alert('修改失败！');
+                        	$('#message').html(data);
+                        }
+                    });
+                }
+                return false;
+            });
+		});
+		</script>
+    </head>
+    <body class="bg">
+    	<#include "../include/header.html"/>     
+        <div class="content w980">
+            <div class="w200 left">
+		        <div class="box">
+		            <div class="p10">
+		                <h2 class="t3">个人中心</h2>
+		            </div>
+		        </div>
+		        <div class="box mt10">
+		            <div class="p10">
+		                <ul class="ul" id="leftNav">
+		                	<li class="current"><a href="${base}/center/changeInfo.jspx">修改资料</a></li>
+		                	<li><a href="${base}/center/changePassword.jspx">修改密码</a></li>
+		                </ul>
+		                <div class="clear"></div>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="w770 left ml10" id="ajax">
+	            <div class="box">
+	                <div class="t1">修改资料</div>
+	                <div class="p10 pt0">  
+	                	<@s.form id="userForm" action="/center/changeInfo.jspx" method="post">           
+	                   <table class="tb">
+	                   	  <tbody>
+	                   	  	<tr>
+						      <td nowrap="nowrap"><label class="lbl">用户名</label></td>
+						      <td><@s.text name="user.username" disabled="true"/>
+						        &nbsp;<span class="desc"></span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">昵称</label></td>
+						      <td><@s.textfield name="user.nickname" cssClass="txt w200"/>
+						        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">请输入2-20个字符之间的昵称</span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">描述</label></td>
+						      <td><@s.textarea name="user.description" cssClass="txt" cols="30" rows="4"/>&nbsp;<span class="desc">小于255个字符</span>
+						      </td>
+						    </tr>
+	                   	  </tbody>
+	                   	  <tfoot>
+						    <tr class="nobg">
+						      <td colspan="2">
+						        <input type="submit" class="btn" value="提交"  />						        
+						      </td>
+						    </tr>
+						 </tfoot>
+	                   </table>
+	                   </@s.form> 	                   
+	                </div>
+	            </div>
+	            <div class="mt10" id="message"></div>		    		    
+		    </div>        	
+        </div>
+        <div class="clear10"></div>
+        <#include "../include/footer.html"/>
+    </body>
+</html>

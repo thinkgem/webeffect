@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+-->        
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" 
+	default-lazy-init="true">
+	
+	<!-- 数据源配置 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location">
+    		<value>classpath:jdbc.properties</value>
+		</property>
+	</bean>	
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">		
+		<property name="driver" value="${db.driver}"/>
+		<property name="driverUrl" value="${db.url}"/>
+		<property name="user" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+    	<property name="alias" value="proxoolPool"/>
+    	<property name="houseKeepingTestSql" value="select 1"/>
+    	<property name="maximumConnectionCount" value="${db.maximumConnectionCount}"/>
+    	<property name="minimumConnectionCount" value="${db.minimumConnectionCount}"/>
+    	<property name="delegateProperties" value="characterEncoding=${db.characterEncoding}"/>
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:/com/thinkgem/webeffect/model/*.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+			hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+			hibernate.show_sql=true
+			hibernate.format_sql=false
+			hibernate.query.substitutions=true 1, false 0
+			hibernate.jdbc.batch_size=20
+			hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+			hibernate.cache.use_second_level_cache=true
+			hibernate.statement_cache.size = 6
+			hibernate.connection.release_mode = after_statement
+			hibernate.cache.provider_configuration_file_resource_path=/ehcache.xml
+			</value>
+		</property>
+	</bean>
+		
+	<!-- 事务配置 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+
+	<!-- 使用annotation自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+	<context:component-scan base-package="com.thinkgem.webeffect" />
+</beans>	

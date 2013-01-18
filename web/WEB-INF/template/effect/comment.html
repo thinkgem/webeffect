@@ -1,0 +1,8 @@
+<#if pagination?exists && pagination.list?size gt 0>			                   	 
+	<#list pagination.list as v>
+	 <tr><td><p><strong>${(pageIndex-1)*pageSize+v_index+1}#</strong>&nbsp;&nbsp; 发表人：${v.username} &nbsp;&nbsp; 发表时间：${v.created} &nbsp;&nbsp; <#if Session?exists && Session.user?exists && Session.user.role==1><a href="javascript:" onclick="delComment(${v.id})">删除</a></#if></p><p style="padding-left:20px;">${v.content}</p></td></tr>
+	</#list>
+<#else>
+	<tr><td style="padding-left:20px;">还没有网友发表评论</td></tr>
+</#if>
+   <tr><td><div class="pagination">${pagination}</div></td></tr>

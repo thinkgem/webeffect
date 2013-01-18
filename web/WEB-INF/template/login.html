@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>登录 - <@s.text name='title'/></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta name="author" content="thinkgem@163.com"/>
+		<link rel="stylesheet" type="text/css" href="${resPath}/global.css" />
+		<link rel="stylesheet" type="text/css" href="${resPath}/login.css" />
+        <script type="text/javascript">
+            if(self.parent.frames.length != 0) {
+                self.parent.location=document.location;
+            }
+        </script>
+    </head>
+    <body>        
+        <table class="logintb">
+            <tr>
+                <td class="login"><h1><@s.text name='title'/></h1>
+                </td>
+                <td>
+                  <form method="post" name="login" id="loginform" action="${base}/login.do">			        
+			        <p style="text-align:center;font-size:14px;">
+			          <div class="loginfailure">
+			          	<#if actionErrors.size() gt 0>
+				    		<@s.actionerror escape="false" />
+				    	<#elseif actionMessages.size() gt 0>
+				    		<@s.actionmessage escape="false"/>
+						</#if>
+					  </div>
+			        </p>
+			        <p class="logintitle">用户名: </p>
+			        <p class="loginform">
+			          <input name="username" tabindex="1" type="text" class="txt" />          
+			        </p>
+			        <p class="logintitle">密　码:</p>
+			        <p class="loginform">
+			          <input name="password" tabindex="2" type="password" class="txt" />
+			        </p>        
+			        <p class="logintitle">界　面:</p>
+			        <p class="loginform">
+			          <select name="theme" tabindex="3" class="txt">
+			            <option value="default">默认界面</option>
+			          </select>
+			        </p>        
+			        <p class="loginnofloat">
+			          <input name="submit" value="提交"  tabindex="4" type="submit" class="btn" />
+			        </p>
+				  </form>
+				  <script type="text/JavaScript">document.getElementById('loginform').username.focus();</script>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="copyright">
+                        <p><span>Copyright 2010 </span><a href="mailto:thinkgem@163.com" title="给我发邮件">ThinkGem</a></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

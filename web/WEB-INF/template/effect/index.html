@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="overflow-y:scroll;">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title><@s.text name='title'/></title>
+        <#include "../include/head.html"/>
+        <script type="text/javascript">
+        function page(i){
+        	location.href = "${base}/setting/user/index.jspx?pageIndex="+i;
+        }
+        function upload(){
+            $.get('${base}/effect/upload.jspx',{categoryId:${categoryId?default(0)}},function(data){
+                $('#ajax').html(data);
+            });
+        }
+        function view(id){
+            $.get('${base}/effect/view.jspx',{id:id},function(data){
+                $('#ajax').html(data);
+            });
+        }
+        function edit(id){
+            $.get('${base}/effect/edit.jspx',{id:id},function(data){
+                $('#ajax').html(data);
+            });
+        }
+        function del(id){
+        	if(confirm('确认删除特效？')){
+                $.post('${base}/effect/delete.jspx',{id:id},function(data){
+                    if (data!='success'){
+                        alert(data);
+                    }else{
+                    	alert('操作成功！');
+                    	window.location.reload();
+                    }
+                });
+            }
+        }
+        </script>
+    </head>
+    <body class="bg">
+    	<#include "../include/header.html"/>     
+        <div class="content w980">
+            <div class="w200 left">
+		        <div class="box">
+		            <div class="p10">
+		                <h2 class="t3">特效首页</h2>
+		            </div>
+		        </div>
+		        <div class="box mt10">
+		            <div class="p10">
+		                <ul class="ul ul2" id="leftNav">
+		                	<li<#if categoryId==0> class="current"</#if>><a href="${base}/effect/index.jspx">全部特效</a></li>
+		                	<#list categoryList as v>		                	
+		                    <li<#if categoryId==v.id> class="current"</#if>><a href="${base}/effect/index.jspx?categoryId=${v.id}" title="${v.name}"><#if v.name?length gt 4>${v.name[0..4]}<#else>${v.name}</#if></a></li>
+		                    </#list>
+		                </ul>
+		                <div class="clear"></div>
+		            </div>
+		        </div>
+		        <div class="box mt10">
+		            <div class="p10">
+		            	<form action="${base}/effect/index.jspx" method="post">
+			                <input type="text" name="query" value="${query?default('查询关键字...')}" class="txt" style="width:114px;" onfocus="if(this.value=='查询关键字...')this.value=''"/>
+			                <input type="submit" value="查询" class="btn"/>
+		                </form>
+		            </div>
+		        </div>
+		        <#if effectTopClickList?exists && effectTopClickList?size gt 0>
+		        <div class="box mt10">
+	                <div class="t1">热门排行</div>
+	                <div class="p10 pt0">                    
+	                   <table class="tb">             	 
+	                   	   <tbody id="tbody">
+	                   	  	<#list effectTopClickList as v>		                	
+		                      <tr><td>[<a href="${base}/effect/index.jspx?categoryId=${v.weCategory.id}" title="${v.categoryName}"><#if v.categoryName?length gt 4>${v.categoryName[0..4]}<#else>${v.categoryName}</#if></a>]
+		                      <a href="javascript:" onclick="view(${v.id});" title="${v.title}"><#if v.title?length gt 8>${v.title[0..8]}<#else>${v.title}</#if></a></td>
+		                    </#list>
+	                   	   </tbody>           
+	                   </table>
+	                </div>
+	            </div>
+	            </#if>
+	            <#if effectTopDownList?exists && effectTopDownList?size gt 0>
+	            <div class="box mt10">
+	                <div class="t1">下载排行</div>
+	                <div class="p10 pt0">                    
+	                   <table class="tb">	                       
+	                   	   <tbody id="tbody">
+	                   	  	<#list effectTopDownList as v>		                	
+		                      <tr><td>[<a href="${base}/effect/index.jspx?categoryId=${v.weCategory.id}" title="${v.categoryName}"><#if v.categoryName?length gt 4>${v.categoryName[0..4]}<#else>${v.categoryName}</#if></a>]
+		                      <a href="javascript:" onclick="view(${v.id});" title="${v.title}"><#if v.title?length gt 8>${v.title[0..8]}<#else>${v.title}</#if></a></td>
+		                    </#list>
+	                   	   </tbody>
+	                   </table>
+	                </div>
+	            </div>
+	            </#if>
+		    </div>
+		    <div class="w770 left ml10" id="ajax">
+	            <div class="box">
+	                <div class="t1">特效列表</div>
+	                <div class="p10 pt0">                    
+	                   <table class="tb">        
+                       	   <thead><tr><td width="300">标题</td><td>说明</td><td width="100">操作</td></tr></thead>	                       	   
+		                   <#if pagination?exists && pagination.list?size gt 0>			                   	 
+	                   	   <tbody id="tbody">
+	                   	  	<#list pagination.list as v>		                	
+		                      <tr><td>[<a href="${base}/effect/index.jspx?categoryId=${v.weCategory.id}" title="${v.categoryName}"><#if v.categoryName?length gt 4>${v.categoryName[0..4]}<#else>${v.categoryName}</#if></a>]
+		                      <a href="javascript:" onclick="view(${v.id});" title="${v.title}"><#if v.title?length gt 20>${v.title[0..20]}<#else>${v.title}</#if></a></td><td><#if v.description?length gt 28>${v.description[0..28]}<#else>${v.description}</#if></td><td><a href="javascript:" onclick="view(${v.id});">预览</a> <#if Session?exists && Session.user?exists && (Session.user.role==1 || Session.user.username==v.username)><a href="javascript:" onclick="edit(${v.id});">编辑</a> <a href="javascript:" onclick="del(${v.id});">删除</a></#if></td></tr>
+		                    </#list>
+	                   	   </tbody>
+			               <#else>
+			               <tbody><tr><td colspan="3">该分类还没上传特效</td></tr></tbody>
+		                   </#if>
+		                   <tfoot>
+	                          <tr><td colspan="1">&nbsp;<a href="javascript:" onclick="upload();" class="add">上传特效</a></td><td colspan="2"><div class="pagination">${pagination}</div></td></tr>
+	                       </tfoot>
+	                   </table>
+	                </div>
+	            </div>
+		    </div>
+        </div>
+        <div class="clear10"></div>
+        <#include "../include/footer.html"/>
+    </body>
+</html>

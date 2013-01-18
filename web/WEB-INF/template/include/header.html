@@ -1,0 +1,14 @@
+	  <div class="header w980">
+           <a class="logo" title="OpenWan" href="${base}"><img alt="<@s.text name='title'/>" src="${resPath}/images/logo.gif"></a>
+           <#if Session?exists && Session.user?exists>
+           <div class="info">您好，${Session.user.nickname} [ <a href="${base}/logout.do">退出</a> ]</div>
+           <#else>
+           <div class="info">您好，欢迎来到<@s.text name='title'/> [ <a href="${base}/login.do">登陆</a> ]</div>
+           </#if>
+           <div class="nav">
+               <ul>
+               	<@we.navigation/>
+               </ul>
+           </div>
+       </div>
+       <div class="clear10"></div>

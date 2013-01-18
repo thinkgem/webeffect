@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="webeffect"
+  id="myeclipse.1283001754437"
+  context-root="/webeffect"
+  j2ee-spec="5.0"
+  archive="webeffect.war">
+  <attributes>
+    <attribute name="webrootdir" value="web" />
+  </attributes>
+</project-module>
+

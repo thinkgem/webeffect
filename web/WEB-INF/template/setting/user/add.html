@@ -1,0 +1,68 @@
+				<script type="text/javascript">
+				$(function(){
+					$('#userForm').bind('submit', function() {
+		                if(confirm('确认提交吗？')){
+		                    //loading('#loading', '正在更新分类请稍候...');                    
+		                    $(this).ajaxSubmit(function(data){
+		                        if(data=="success"){
+		                            alert('添加成功！');
+		                        	window.location.reload();
+		                        }else{
+		                        	alert('添加失败！');
+		                        	$('#message').html(data);
+		                        }
+		                    });
+		                }
+		                return false;
+		            });
+				});
+				</script>
+				<div class="box">
+	                <div class="t1">添加用户</div>
+	                <div class="p10 pt0">         
+	                   <@s.form id="userForm" action="/setting/user/add.jspx" method="post">           
+	                   <table class="tb">	                   	  
+	                   	  <tbody>
+	                   	  	<tr>
+						      <td nowrap="nowrap"><label class="lbl">用户名</label></td>
+						      <td><@s.textfield name="user.username" cssClass="txt w200"/>
+						        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">以字母开头，只能包含字符、下划线、数字，长度在4-20个字符之间</span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">密码</label></td>
+						      <td><@s.textfield name="user.password" cssClass="txt w200"/>
+						        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">请输入4-20个字符之间的密码</span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">昵称</label></td>
+						      <td><@s.textfield name="user.nickname" cssClass="txt w200"/>
+						        &nbsp;<span class="req">*</span>&nbsp;<span class="desc">请输入2-20个字符之间的昵称</span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">描述</label></td>
+						      <td><@s.textarea name="user.description" cssClass="txt" cols="30" rows="4"/>&nbsp;<span class="desc">小于255个字符</span>
+						      </td>
+						    </tr>
+						    <tr>
+						      <td nowrap="nowrap"><label class="lbl">角色</label></td>
+						      <td><@s.select name="user.role" list="roleMap" listKey="key" listValue="value" cssClass="txt w200"/>
+						        &nbsp;<span class="req">*</span>&nbsp;<span class="desc"></span>
+						      </td>
+						    </tr>
+	                   	  </tbody>
+	                   	  <tfoot>
+						    <tr class="nobg">
+						      <td colspan="2">
+						        <input type="submit" class="btn" value="提交"  />						        
+						        <input type="button" class="btn" value="返回" onclick="window.location.reload();" />
+						      </td>
+						    </tr>
+						 </tfoot>
+	                   </table>
+	                   </@s.form>
+	                </div>
+	            </div>   
+	            <div class="mt10" id="message"></div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="effect" namespace="/effect" extends="common">
+		<action name="download" method="download" class="effectAction">
+			<interceptor-ref name="authStack"/>
+			<result type="stream">
+                <param name="contentType">application/octet-stream;charset=ISO8859-1</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename=${fileName}</param>
+                <param name="bufferSize">8192</param>
+            </result>
+		</action>
+		<action name="uploadfile" method="uploadfile" class="effectAction" />
+		<action name="*" method="{1}" class="effectAction">
+			<interceptor-ref name="authStack"/>
+			<result>${tplPath}/effect/{1}.html</result>				
+		</action>
+	</package>
+</struts>

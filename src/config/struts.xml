@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="common" extends="struts-default" namespace="">
+		
+		<!-- 设置默认结果类型 -->
+		<result-types>
+            <result-type name="freemarker" class="org.apache.struts2.views.freemarker.FreemarkerResult" default="true"/>
+        </result-types>
+        
+        <!-- 拦截器定义 -->
+		<interceptors>
+			<!-- 添加清除错误和信息过滤器 -->
+			<interceptor name="clearErrorsAndMessagesInterceptor"
+				class="com.thinkgem.webeffect.interceptor.ClearErrorsAndMessagesInterceptor" />
+			<interceptor-stack name="commonStack">
+				<interceptor-ref name="clearErrorsAndMessagesInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+			<!-- 访问权限拦截器 -->
+			<interceptor name="authInterceptor"
+				class="com.thinkgem.webeffect.interceptor.AuthInterceptor" />
+			<interceptor-stack name="authStack">				
+				<interceptor-ref name="authInterceptor"></interceptor-ref>
+				<interceptor-ref name="commonStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 设置默认拦截器 -->
+		<default-interceptor-ref name="commonStack"></default-interceptor-ref>
+		
+		<!-- 全局结果定义 -->
+		<global-results>
+			<result name="error">${tplPath}/message.html</result>
+			<result name="input">${tplPath}/message.html</result>
+			<result name="login" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">login</param>
+			</result>
+			<result name="success">${tplPath}/message.html</result>
+			<result name="message">${tplPath}/message.html</result>
+			<result name="403">/403.html</result>
+		</global-results>
+	</package>
+	
+	<!-- 引入包 -->
+	<include file="com/thinkgem/webeffect/action/struts-default.xml" />
+	<include file="com/thinkgem/webeffect/action/struts-effect.xml" />
+	<include file="com/thinkgem/webeffect/action/struts-setting.xml" />
+	<include file="com/thinkgem/webeffect/action/struts-center.xml" />
+	
+</struts>

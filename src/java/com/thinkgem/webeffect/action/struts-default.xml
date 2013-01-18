@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="default" namespace="" extends="common">
+		<action name="index" method="index" class="defaultAction">
+			<result name="login" type="redirectAction">
+				<param name="namespace"></param>
+				<param name="actionName">login</param>
+			</result>
+			<result name="success" type="redirectAction">
+				<param name="namespace">effect</param>
+				<param name="actionName">index</param>
+			</result>
+		</action>
+		<action name="login" method="login" class="defaultAction">
+			<result name="input">${tplPath}/login.html</result>
+			<result name="success" type="redirectAction">
+				<param name="namespace">effect</param>
+				<param name="actionName">index</param>
+			</result>
+		</action>
+		<action name="logout" method="logout" class="defaultAction">
+			<result name="success" type="redirectAction">
+				<param name="namespace">effect</param>
+				<param name="actionName">index</param>
+			</result>
+		</action>
+	</package>
+</struts>
