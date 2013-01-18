@@ -7,7 +7,7 @@
 
 ##使用技术
 
-Java JDK1.6、Spring Framework 3.0、Hibernate 3、Freemarker 2.3
+Java JDK1.6、Spring Framework 3.0、Status2.1、Hibernate 3、Freemarker 2.3
 
 ##快速安装部署
 
